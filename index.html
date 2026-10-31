@@ -2,74 +2,349 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Smiley Pumpkin</title>
-<meta name="description" content="Smiley Pumpkin - coming soon.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Please Stop Landing Here | Smiley Pumpkin</title>
+<meta name="description" content="Please Stop Landing Here: a neon top-down turret defence game from Smiley Pumpkin. One turret, eight gates, an endless alien swarm. Coming to Steam.">
+<meta name="theme-color" content="#04020b">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.smileypumpkin.com/">
+<meta property="og:title" content="Please Stop Landing Here">
+<meta property="og:description" content="One turret. Eight gates. An endless neon alien swarm. Coming to Steam from Smiley Pumpkin.">
+<meta property="og:image" content="https://www.smileypumpkin.com/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="smiley-pumpkin.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #000;
-    --orange: #ff8a00;
-    --yellow: #ffc21a;
-    --ink: #2a1200;
-  }
-  * { box-sizing: border-box; margin: 0; }
-  html, body { height: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--yellow);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(8px, 2vh, 24px);
-    min-height: 100vh;
-    padding: 24px 16px;
-    overflow-x: hidden;
-    font-family: "Bangers", "Impact", sans-serif;
-  }
-  .logo {
-    width: min(70vw, 56vh, 520px);
-    height: auto;
-    display: block;
-    margin-bottom: calc(min(70vw, 56vh, 520px) * -0.04);
-  }
-  .coming-soon {
-    font-size: clamp(40px, 11vw, 120px);
-    line-height: 1;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    transform: rotate(-4deg);
-    background: linear-gradient(180deg, var(--yellow) 15%, var(--orange) 85%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-stroke: 2px var(--ink);
-    filter: drop-shadow(0 4px 0 #7a2e00) drop-shadow(0 0 18px rgba(255, 138, 0, 0.35));
-  }
-  .dot {
-    display: inline-block;
-    background: linear-gradient(180deg, var(--yellow) 15%, var(--orange) 85%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: hop 1.6s ease-in-out infinite;
-  }
-  .dot:nth-child(2) { animation-delay: 0.15s; }
-  .dot:nth-child(3) { animation-delay: 0.3s; }
-  @keyframes hop {
-    0%, 60%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-0.18em); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .dot { animation: none; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/keyart.webp">
+<link rel="stylesheet" href="css/site.css">
 </head>
 <body>
-  <img class="logo" src="smiley-pumpkin.png" alt="Smiley Pumpkin" width="720" height="720">
-  <h1 class="coming-soon" aria-label="Coming Soon...">Coming Soon<span class="dots" aria-hidden="true"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span></h1>
+<a class="skip" href="#game">Skip to content</a>
+<canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <a class="studio" href="#top" aria-label="Smiley Pumpkin home">
+    <img src="assets/img/pumpkin.webp" alt="" width="54" height="54">
+    <span>Smiley Pumpkin</span>
+  </a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#game">The Game</a>
+    <a href="#invaders">Invaders</a>
+    <a href="#bosses">Bosses</a>
+    <a href="#darkside">Darkside</a>
+    <a href="#music">Music</a>
+    <a href="#screens">Screens</a>
+    <a class="steam-pill" href="#steam"><span class="led" aria-hidden="true"></span>Steam page pending</a>
+  </nav>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <h1 id="hero-title" style="margin:0">
+        <img class="game-logo" src="assets/img/logo.webp" alt="Please Stop Landing Here" width="1040" height="610">
+      </h1>
+      <p class="tagline">Another quiet night at Outpost 9.<br><em>Then the saucers came.</em></p>
+      <p class="hero-sub">You put up a sign. They did not stop. So now it's you, one auto-firing turret, and an endless neon alien invasion pouring in from every side.</p>
+      <div class="cta-row">
+        <a class="btn steam" href="#steam">Steam page pending <span class="tag">SOON</span></a>
+        <a class="btn music" href="#music" data-autoplay>&#9654; Play the soundtrack</a>
+        <a class="btn" href="#screens">Screenshots</a>
+      </div>
+      <p class="platform">PC &middot; Windows &middot; from Smiley Pumpkin</p>
+    </div>
+    <a class="scroll-hint" href="#game" aria-label="Scroll to the game">SCROLL<i></i></a>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>WAVE 1 <b>&#9656;</b> ALIENS INBOUND</span><span>PLEASE STOP LANDING HERE</span><span>x8 COMBO</span>
+      <span>SAVE THE SCIENTISTS</span><span>BOSS INCOMING <b>&#9656;</b> WAVE 10</span><span>AREA CLEARED!</span>
+      <span>WELCOME TO THE DARKSIDE</span><span>WAVE 70 AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
+      <span>WAVE 1 <b>&#9656;</b> ALIENS INBOUND</span><span>PLEASE STOP LANDING HERE</span><span>x8 COMBO</span>
+      <span>SAVE THE SCIENTISTS</span><span>BOSS INCOMING <b>&#9656;</b> WAVE 10</span><span>AREA CLEARED!</span>
+      <span>WELCOME TO THE DARKSIDE</span><span>WAVE 70 AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
+    </div>
+  </div>
+
+  <!-- ============ GAMEPLAY ============ -->
+  <section class="section" id="game" aria-labelledby="game-title">
+    <div class="wrap gameplay-grid">
+      <div class="reveal">
+        <span class="eyebrow">The game</span>
+        <h2 class="h2" id="game-title">One click.<br>Total chaos.</h2>
+        <p class="lede">You're in the turret at the centre of the arena. <strong>It fires on its own</strong> &mdash; you click where you want it to face and it swings round to cover that gate. Easy to pick up. Near-impossible to hold.</p>
+        <ol class="how">
+          <li><span><strong>Aim, don't shoot.</strong> Eight gates, aliens from every side. Pick the gate that's about to break.</span></li>
+          <li><span><strong>Build the combo.</strong> Kill streaks climb all the way to x8 &mdash; one hit on the turret and it's gone.</span></li>
+          <li><span><strong>Upgrade between runs.</strong> Every kill drops cash: firing speed, damage, multi-shot, rotation, health and more.</span></li>
+        </ol>
+        <div class="stats">
+          <div class="stat"><b data-count="70">70</b><span>Waves to the end</span></div>
+          <div class="stat"><b data-count="7">7</b><span>Huge bosses</span></div>
+          <div class="stat"><b data-count="7">7</b><span>Alien species</span></div>
+          <div class="stat"><b data-count="12">12</b><span>Original tracks</span></div>
+          <div class="stat"><b>x8</b><span>Max combo</span></div>
+          <div class="stat"><b>&infin;</b><span>Batsh*t mode</span></div>
+        </div>
+      </div>
+      <div class="reveal" data-delay="1">
+        <figure class="screen tilt">
+          <img src="assets/img/shots/swarm.webp" alt="Wave 55: the turret holds the neon arena while a huge alien crowd presses against all eight gates" width="1600" height="900" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="section story" id="story" aria-labelledby="story-title">
+    <div class="wrap story-grid">
+      <div class="reveal">
+        <span class="eyebrow">The story so far</span>
+        <h2 class="caption-box" id="story-title">They did<br>not stop.</h2>
+        <p>Another quiet night at Outpost 9. <span class="sfx">SILENCE&hellip;</span></p>
+        <p>Then a saucer came down right on top of him. <span class="sfx">VWORRRP!</span> So he put up a sign. <span class="sfx">TAP TAP.</span></p>
+        <p>They did not stop. <span class="sfx">VWORP! VWORP!</span></p>
+        <p><strong>Right. That's it.</strong></p>
+      </div>
+      <figure class="comic reveal" data-delay="1">
+        <img src="assets/img/comic.webp" alt="The game's manga intro page: a lone astronaut at Outpost 9 puts up a 'Please Stop Landing Here' sign as the saucers keep landing, then leaps into his turret" width="1280" height="720" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ POWER-UPS ============ -->
+  <section class="section" id="powerups" aria-labelledby="pu-title">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Save the scientists</span>
+        <h2 class="h2 hot" id="pu-title">Break glass in<br>case of aliens.</h2>
+        <p class="lede">Panicking scientists sprint for your turret &mdash; and the aliens grab them. Clear a path and get them home for an <strong>emergency power-up</strong>. Hold one of each. Spend them wisely.</p>
+      </div>
+      <div class="powers">
+        <div class="power-view reveal">
+          <figure class="screen">
+            <img id="powerImg" src="assets/img/shots/shock.webp" alt="Electric Wipeout tearing through the aliens on wave 35" width="1600" height="900" loading="lazy">
+            <span class="label" id="powerLabel">ELECTRIC WIPEOUT</span>
+          </figure>
+        </div>
+        <div class="power-list reveal" data-delay="1" role="tablist" aria-label="Power-ups">
+          <button class="power" role="tab" aria-selected="true" style="--c: var(--cyan)" data-img="shock" data-alt="Electric Wipeout tearing through the aliens on wave 35">
+            <img src="assets/img/icons/electric_wipeout.webp" alt="" width="72" height="72">
+            <span><h3>Electric Wipeout</h3><p>Lightning hits everything on screen. Grunts fry outright; even bosses feel it.</p></span>
+          </button>
+          <button class="power" role="tab" aria-selected="false" style="--c: var(--violet)" data-img="slomo" data-alt="Slo-Mo: the arena turns dreamy and every alien crawls">
+            <img src="assets/img/icons/slo_mo.webp" alt="" width="72" height="72">
+            <span><h3>Slo-Mo</h3><p>Ten seconds where every alien wades through treacle. Your turret doesn't.</p></span>
+          </button>
+          <button class="power" role="tab" aria-selected="false" style="--c: var(--orange)" data-img="spin" data-alt="Flamethrower Spin sweeping the gates on wave 45">
+            <img src="assets/img/icons/spin_fire.webp" alt="" width="72" height="72">
+            <span><h3>Flamethrower Spin</h3><p>The turret takes over and torches its way round every open gate in turn.</p></span>
+          </button>
+          <button class="power" role="tab" aria-selected="false" style="--c: var(--red)" data-img="omni" data-alt="Omni-Fire: bullets spiral down every gate at once on wave 25">
+            <img src="assets/img/icons/omni_fire.webp" alt="" width="72" height="72">
+            <span><h3>Omni-Fire</h3><p>A spinning spiral of bullets down every gate at once. The last-resort button.</p></span>
+          </button>
+          <p class="scientist-note">Sometimes a rescued scientist brings a <strong>heart</strong> instead &mdash; full health, right when you need it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INVADERS ============ -->
+  <section class="section" id="invaders" aria-labelledby="inv-title">
+    <div class="wrap">
+      <div class="aliens-head reveal">
+        <div>
+          <span class="eyebrow">Know your invader</span>
+          <h2 class="h2 pink" id="inv-title">Seven ways<br>to be overrun.</h2>
+        </div>
+        <p class="lede" style="max-width:44ch">Every ten waves is a new area with its own colours, its own music and its own new alien &mdash; which then never goes away.</p>
+      </div>
+      <div class="alien-grid">
+        <article class="alien reveal" style="--c: var(--acid)">
+          <div class="portrait"><span class="waves">WAVES 1&ndash;10</span><img src="assets/img/aliens/alien.webp" alt="The standard alien: squat, big-headed, eyes on stalks" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Grunt</h3><div class="area">A Piece of Cake</div><p>Squat, blobby and big-headed. One on its own is nothing. They never come on their own.</p></div>
+        </article>
+        <article class="alien reveal" data-delay="1" style="--c: var(--violet)">
+          <div class="portrait"><span class="waves">WAVES 11&ndash;20</span><img src="assets/img/aliens/heavy.webp" alt="The Heavy: a hulking knuckle-walking brute" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Heavy</h3><div class="area">Chunky Monkey</div><p>Hulking knuckle-walkers that freeze, flash and swell up as they close in. Keep firing.</p></div>
+        </article>
+        <article class="alien reveal" data-delay="2" style="--c: var(--orange)">
+          <div class="portrait"><span class="waves">WAVES 21&ndash;30</span><img src="assets/img/aliens/runner.webp" alt="The Runner: a spindly four-legged skitterer" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Runner</h3><div class="area">Speed is of the Essence</div><p>Spindly four-legged skitterers. Fragile, frantic, and they punish a moment's hesitation.</p></div>
+        </article>
+        <article class="alien reveal" style="--c: var(--cyan)">
+          <div class="portrait"><span class="waves">WAVES 31&ndash;40</span><img src="assets/img/aliens/splitter.webp" alt="The Splitter: a round alien that bursts when killed" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Splitter</h3><div class="area">A Splitting Headache</div><p>Kill it and it bursts into a handful of fast little Splitlings &mdash; who come straight back.</p></div>
+        </article>
+        <article class="alien reveal" data-delay="1" style="--c: var(--red)">
+          <div class="portrait"><span class="waves">WAVES 41&ndash;50</span><img src="assets/img/aliens/bomber.webp" alt="The Bomber: an alien carrying a bomb toward the turret" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Bomber</h3><div class="area">Bombtastic</div><p>Carries a bomb to your turret and plants it. Shoot it first and the blast takes its friends with it.</p></div>
+        </article>
+        <article class="alien reveal" data-delay="2" style="--c: var(--blue)">
+          <div class="portrait"><span class="waves">WAVES 51&ndash;60</span><img src="assets/img/aliens/shield.webp" alt="The Shield-bearer: an alien behind an energy shield" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>Shield-bearer</h3><div class="area">Shields Up</div><p>Marches in behind an energy shield that soaks your bullets &mdash; and covers everyone behind it.</p></div>
+        </article>
+        <article class="alien reveal" style="--c: var(--yellow)">
+          <div class="portrait"><span class="waves">WAVES 61&ndash;70</span><img src="assets/img/aliens/tunneller.webp" alt="The Tunneller: a horned alien that digs under the walls" width="432" height="432" loading="lazy"></div>
+          <div class="body"><h3>The Tunneller</h3><div class="area">Digging their own Grave</div><p>Skips the queue. Digs in, ripples under your wall, and bursts up inside the arena.</p></div>
+        </article>
+        <div class="alien extra reveal" data-delay="1">
+          <div><b>&hellip;and all of them at once.</b><p>Beat the game to unlock <strong>BATSH*T CRAZY</strong>: endless waves, double speed, every alien in the mix.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOSSES ============ -->
+  <section class="section bosses" id="bosses" aria-labelledby="boss-title">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Every tenth wave</span>
+        <h2 class="h2 hot" id="boss-title">Something<br>much bigger.</h2>
+        <p class="lede">Seven bosses, each too wide to fit through a gate &mdash; so they don't. Beat one to clear the area, get beamed up, and unlock a checkpoint. Here's the first. The rest you'll have to meet in person.</p>
+      </div>
+      <div class="boss-stage reveal">
+        <div class="boss-view">
+          <figure class="screen">
+            <div class="boss-bar" aria-hidden="true"><span></span></div>
+            <img id="bossImg" src="assets/img/bosses/kraken.webp" alt="" width="1280" height="720" loading="lazy">
+            <div class="boss-locked" id="bossLocked" hidden aria-hidden="true"><span class="q">?</span><span class="stamp">CLASSIFIED</span></div>
+            <figcaption class="boss-hud" aria-live="polite">
+              <span class="wave" id="bossWave">WAVE 10</span>
+              <h3 id="bossName">KRAKEN</h3>
+              <p id="bossDesc"></p>
+            </figcaption>
+          </figure>
+        </div>
+        <div>
+          <ol class="boss-list" id="bossList" role="tablist" aria-label="Bosses"></ol>
+          <div class="final-warn" aria-hidden="true"><span>WARNING: FINAL BOSS AT WAVE 70</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DARKSIDE ============ -->
+  <section class="section darkside" id="darkside" aria-labelledby="ds-title">
+    <div class="wrap darkside-grid">
+      <div class="reveal">
+        <span class="eyebrow" style="color: var(--pink)">Bonus level</span>
+        <h2 class="h2 pink" id="ds-title">Welcome to<br>the Darkside.</h2>
+        <p class="lede">Clear an area and a UFO beams you up &mdash; then drops you onto a marbled ribbon twisting through space. Eight lanes rolling over floor, wall and ceiling. Grab the coins, hit the multiplier rings, dodge the mines. It just keeps getting faster.</p>
+        <p class="lede" style="margin-top:14px">Oh, and there's a different animal in the way every visit.</p>
+        <ul class="animals">
+          <li><img src="assets/img/animals/sheep.webp" alt="" width="124" height="124" loading="lazy">Sheep</li>
+          <li><img src="assets/img/animals/goats.webp" alt="" width="124" height="124" loading="lazy">Goats</li>
+          <li><img src="assets/img/animals/llamas.webp" alt="" width="124" height="124" loading="lazy">Llamas</li>
+          <li><img src="assets/img/animals/dogs.webp" alt="" width="124" height="124" loading="lazy">Dogs</li>
+          <li><img src="assets/img/animals/cats.webp" alt="" width="124" height="124" loading="lazy">Cats</li>
+          <li><img src="assets/img/animals/giraffes.webp" alt="" width="124" height="124" loading="lazy">Giraffes</li>
+        </ul>
+      </div>
+      <div class="ds-shots reveal" data-delay="1">
+        <figure class="screen"><img src="assets/img/shots/darkside-giraffe.webp" alt="The Darkside warp tube: grab the coins, dodge the giraffes" width="1600" height="900" loading="lazy"></figure>
+        <figure class="screen"><img src="assets/img/shots/darkside-ribbon.webp" alt="The astronaut running a magenta ribbon through space toward an x4 multiplier ring" width="1600" height="900" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOUNDTRACK ============ -->
+  <section class="section" id="music" aria-labelledby="music-title">
+    <div class="wrap music-grid">
+      <div class="reveal">
+        <div class="viz-wrap" id="vizWrap">
+          <canvas id="viz" aria-hidden="true"></canvas>
+          <div class="viz-center" id="vizCenter">
+            <img src="assets/img/game-icon.webp" alt="" width="256" height="256">
+            <button class="play-big" id="playBig" aria-label="Play or pause the soundtrack">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" data-delay="1">
+        <span class="eyebrow" style="color: var(--magenta)">Original soundtrack</span>
+        <h2 class="h2 pink" id="music-title">Turn it up.</h2>
+        <p class="lede">A full track for every area, the Darkside, the final boss and Batsh*t mode &mdash; and the arena pulses to the beat. Have a listen.</p>
+        <ul class="tracks" id="tracks">
+          <li><button class="track" data-src="assets/audio/title.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Title Theme<small>Outpost 9, after dark</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/area-1.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Area 1<small>A Piece of Cake</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/area-4.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Area 4<small>A Splitting Headache</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/darkside.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">The Darkside<small>Bonus level</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/final-boss.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Final Boss<small>Wave 70</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/batshit.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Batsh*t Crazy<small>Endless mode</small></span><span class="d">0:45</span></button></li>
+        </ul>
+        <div class="progress" id="progress" aria-hidden="true"><span></span></div>
+        <p class="music-note">45-second previews. Headphones recommended.</p>
+      </div>
+    </div>
+    <audio id="audio" preload="none"></audio>
+  </section>
+
+  <!-- ============ SCREENSHOTS ============ -->
+  <section class="section" id="screens" aria-labelledby="shots-title">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Screenshots</span>
+        <h2 class="h2" id="shots-title">Neon overload.</h2>
+        <p class="lede">Real frames from the game. Glow, sparks, splats, hit-stop and screen-shake &mdash; and it only gets louder.</p>
+      </div>
+      <div class="gallery" id="gallery">
+        <button class="shot reveal" data-full="assets/img/shots/swarm.webp"><img src="assets/img/thumbs/swarm.webp" alt="Wave 55: the alien crowd surrounds the arena" width="800" height="450" loading="lazy"><figcaption>WAVE 55 &middot; THE SWARM</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/kraken-ink.webp"><img src="assets/img/thumbs/kraken-ink.webp" alt="The Kraken reaching into the arena and squirting ink" width="800" height="450" loading="lazy"><figcaption>WAVE 10 &middot; KRAKEN</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/darkside-giraffe.webp"><img src="assets/img/thumbs/darkside-giraffe.webp" alt="The Darkside: grab the coins, dodge the giraffes" width="800" height="450" loading="lazy"><figcaption>THE DARKSIDE &middot; GIRAFFES</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/omni.webp"><img src="assets/img/thumbs/omni.webp" alt="Omni-Fire on wave 25" width="800" height="450" loading="lazy"><figcaption>OMNI-FIRE</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/spin.webp"><img src="assets/img/thumbs/spin.webp" alt="Flamethrower Spin on wave 45" width="800" height="450" loading="lazy"><figcaption>FLAMETHROWER SPIN</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/heavies.webp"><img src="assets/img/thumbs/heavies.webp" alt="Heavies pushing in on wave 15" width="800" height="450" loading="lazy"><figcaption>WAVE 15 &middot; CHUNKY MONKEY</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/slomo.webp"><img src="assets/img/thumbs/slomo.webp" alt="Slo-Mo: the arena turns dreamy and every alien crawls" width="800" height="450" loading="lazy"><figcaption>SLO-MO</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/shock.webp"><img src="assets/img/thumbs/shock.webp" alt="Electric Wipeout on wave 35" width="800" height="450" loading="lazy"><figcaption>ELECTRIC WIPEOUT</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/shots/darkside-ribbon.webp"><img src="assets/img/thumbs/darkside-ribbon.webp" alt="The Darkside ribbon twisting through space" width="800" height="450" loading="lazy"><figcaption>THE DARKSIDE</figcaption></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEAM ============ -->
+  <section class="section" id="steam" aria-labelledby="steam-title">
+    <div class="wrap">
+      <div class="steam-card reveal">
+        <span class="status"><span class="led" aria-hidden="true"></span>STEAM PAGE: PENDING</span>
+        <h2 class="h2 hot" id="steam-title">Landing on Steam.</h2>
+        <p class="lede">The store page is on its way. As soon as it's live, the wishlist button lands right here &mdash; and wishlisting is the single best way to help a small studio's first game.</p>
+        <div class="cta-row">
+          <a class="btn steam" role="link" aria-disabled="true" tabindex="0">Wishlist on Steam <span class="tag">SOON</span></a>
+          <a class="btn" href="#top">Back to the top</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <a class="studio" href="#top" aria-label="Smiley Pumpkin, back to top">
+      <img src="assets/img/pumpkin.webp" alt="" width="72" height="72">
+      <span>Smiley Pumpkin</span>
+    </a>
+    <p>&copy; 2026 Smiley Pumpkin. <em>Please Stop Landing Here</em> is in development for PC.</p>
+    <p class="hi">TIP: CLICK ANYWHERE TO SHOOT</p>
+  </div>
+</footer>
+
+<div class="hud-score" id="hud" aria-hidden="true">SCORE<b id="hudScore">00000000</b><em id="hudCombo"></em></div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous screenshot">&lsaquo;</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next screenshot">&rsaquo;</button>
+</div>
+
+<script src="js/site.js"></script>
 </body>
 </html>
