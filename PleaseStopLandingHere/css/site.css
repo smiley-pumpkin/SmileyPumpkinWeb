@@ -180,7 +180,9 @@ main, footer { position: relative; z-index: 1; }
 @keyframes tick { to { transform: translateX(-50%); } }
 
 /* ---------- sections ---------- */
-.section { padding: clamp(80px, 12vw, 150px) var(--gutter); }
+/* A nav jump skips the section's empty top band, so its heading lands just
+   under the bar (html scroll-padding-top clears the bar itself). */
+.section { padding: clamp(80px, 12vw, 150px) var(--gutter); scroll-margin-top: calc(24px - clamp(80px, 12vw, 150px)); }
 .wrap { max-width: var(--max); margin: 0 auto; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
