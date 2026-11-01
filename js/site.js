@@ -135,17 +135,28 @@
     popups.push({ x, y: y - 10, text: combo > 1 ? `+${pts} x${combo}` : `+${pts}`, c: combo > 1 ? "#ffc21a" : "#fff", life: 60 });
     if (!fxRunning) { fxRunning = true; requestAnimationFrame(fxLoop); }
   };
+  // Mouse fires on press; touch and pen fire on a completed tap (click), so scrolling a phone doesn't shoot.
+  const notTarget = (e) => e.target.closest("a, button, [role=tab], .lightbox, audio, input");
+  let lastPointer = "mouse";
   addEventListener("pointerdown", (e) => {
-    if (e.button !== 0 || e.target.closest("a, button, [role=tab], .lightbox, audio, input")) return;
+    lastPointer = e.pointerType;
+    if (e.pointerType !== "mouse" || e.button !== 0 || notTarget(e)) return;
+    shoot(e.clientX, e.clientY);
+  });
+  addEventListener("click", (e) => {
+    if (lastPointer === "mouse" || notTarget(e)) return;
     shoot(e.clientX, e.clientY);
   });
 
   // ---------- power-up switcher ----------
-  const powerImg = $("#powerImg"), powerLabel = $("#powerLabel");
+  const powerImg = $("#powerImg"), powerLabel = $("#powerLabel"), powerDesc = $("#powerDesc");
   const powers = $$(".power");
+  const showPowerDesc = (btn) => (powerDesc.textContent = $("p", btn).textContent);
+  showPowerDesc(powers.find((b) => b.getAttribute("aria-selected") === "true"));
   const selectPower = (btn) => {
     if (btn.getAttribute("aria-selected") === "true") return;
     powers.forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+    showPowerDesc(btn);
     powerImg.style.opacity = 0;
     setTimeout(() => {
       powerImg.src = `assets/img/shots/${btn.dataset.img}.webp`;
@@ -173,30 +184,35 @@
   }
 
   // ---------- bosses ----------
-  // Only the first boss is shown; the rest stay a surprise (no names, images or mechanics).
-  const LOCKED_C = "#ff3b4e";
+  // The Mothership's later stages are a surprise: show and describe stage 1 only.
   const BOSSES = [
     { n: "KRAKEN", w: 10, c: "#3a6bff", img: "kraken", move: "LUNGE",
       d: "Lurks just outside the arena, surges in and backs off &mdash; and its tentacles come in through your gates. Ink included." },
-    { w: 20, locked: true, d: "Signal intercepted. Contents: unknown. Mood: hostile." },
-    { w: 30, locked: true, d: "Outpost 9's sensors reported something very large. Then they stopped reporting." },
-    { w: 40, locked: true, d: "Whatever it is, it has strong opinions about your turret." },
-    { w: 50, locked: true, d: "The scientists refuse to talk about it." },
-    { w: 60, locked: true, d: "Survive sixty waves and find out." },
-    { w: 70, locked: true, final: true, d: "The final boss. That's all we're saying." },
+    { n: "BIG BRAIN", w: 20, c: "#ff2fd6", img: "brain", move: "BLINK",
+      d: "Hovers, then beams out and back in somewhere else. Brings a copy of itself. Throws Heavies at you." },
+    { n: "OVERLORD", w: 30, c: "#ff3b4e", img: "overlord", move: "ORBIT",
+      d: "Glides round the ring, pausing on a gate to rain glowing orbs. Your flamethrower burns them out of the sky." },
+    { n: "HYDRA", w: 40, c: "#b6ff2e", img: "hydra", move: "CHARGE",
+      d: "Dashes two or three gates at a time and stomps. Take the green heads off &mdash; then go for the golden one." },
+    { n: "HIVE QUEEN", w: 50, c: "#ffc21a", img: "queen", move: "LEAP",
+      d: "Leaps round the ring to a gate of her choosing and leaves nests behind. Burn them." },
+    { n: "THE WYRM", w: 60, c: "#7dff5a", img: "wyrm", move: "DIVE",
+      d: "Coils in and out through the wall. Only its tail end can be hurt &mdash; until it can't, and then it's the head." },
+    { n: "THE MOTHERSHIP", w: 70, c: "#36e6ff", img: "mothership", move: "FINAL", final: true,
+      d: "The one that started all this. It's seen your sign. It is not impressed. Beat it to win &mdash; and unlock Batsh*t Crazy." },
   ];
   const bossSection = $("#bosses"), bossList = $("#bossList"), bossImg = $("#bossImg");
-  const bossName = $("#bossName"), bossWave = $("#bossWave"), bossDesc = $("#bossDesc"), bossLocked = $("#bossLocked");
+  const bossName = $("#bossName"), bossWave = $("#bossWave"), bossDesc = $("#bossDesc");
   const CYCLE = 6000;
   let bossIdx = 0, bossTimer = null, bossAuto = true;
   BOSSES.forEach((b, i) => {
     const li = document.createElement("li");
-    li.innerHTML = `<button class="boss-tab${b.final ? " final" : ""}${b.locked ? " locked" : ""}" role="tab" aria-selected="false" style="--c:${b.locked ? LOCKED_C : b.c}">
-      <span class="n">${b.w}</span><span class="name">${b.locked ? "???" : b.n}</span><span class="prog"></span></button>`;
+    li.innerHTML = `<button class="boss-tab${b.final ? " final" : ""}" role="tab" aria-selected="false" style="--c:${b.c}">
+      <span class="n">${b.w}</span><span class="name">${b.n}</span><span class="prog"></span></button>`;
     const btn = li.firstElementChild;
-    btn.setAttribute("aria-label", b.locked ? `Wave ${b.w} boss: classified` : `Wave ${b.w} boss: ${b.n}`);
     btn.addEventListener("click", () => { bossAuto = false; showBoss(i); });
     bossList.appendChild(li);
+    const pre = new Image(); pre.src = `assets/img/bosses/${b.img}.webp`;
   });
   const tabs = $$(".boss-tab", bossList);
   const showBoss = (i) => {
@@ -208,18 +224,13 @@
       p.classList.remove("run");
       if (j === i && bossAuto && !reduced) { void p.offsetWidth; p.style.setProperty("--dur", CYCLE + "ms"); p.classList.add("run"); }
     });
-    bossSection.style.setProperty("--boss-c", b.locked ? LOCKED_C : b.c);
-    bossSection.classList.toggle("is-locked", !!b.locked);
-    bossLocked.hidden = !b.locked;
-    if (!b.locked) {
-      bossImg.src = `assets/img/bosses/${b.img}.webp`;
-      bossImg.alt = `${b.n} on wave ${b.w}`;
-    }
-    bossName.textContent = b.locked ? "CLASSIFIED" : b.n;
+    bossSection.style.setProperty("--boss-c", b.c);
+    bossImg.src = `assets/img/bosses/${b.img}.webp`;
+    bossImg.alt = `${b.n} on wave ${b.w}`;
+    bossName.textContent = b.n;
     bossWave.textContent = b.final ? `WAVE ${b.w} · FINAL BOSS` : `WAVE ${b.w}`;
-    bossDesc.innerHTML = b.locked ? b.d : `<span class="move">${b.move}</span>${b.d}`;
-    const fxTarget = b.locked ? bossLocked : bossImg;
-    if (!reduced) { fxTarget.classList.remove("glitch"); void fxTarget.offsetWidth; fxTarget.classList.add("glitch"); }
+    bossDesc.innerHTML = `<span class="move">${b.move}</span>${b.d}`;
+    if (!reduced) { bossImg.classList.remove("glitch"); void bossImg.offsetWidth; bossImg.classList.add("glitch"); }
     clearTimeout(bossTimer);
     if (bossAuto && !reduced) bossTimer = setTimeout(() => inView && showBoss((bossIdx + 1) % BOSSES.length), CYCLE);
   };

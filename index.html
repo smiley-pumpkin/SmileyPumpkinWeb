@@ -64,10 +64,10 @@
     <div class="ticker-track">
       <span>WAVE 1 <b>&#9656;</b> ALIENS INBOUND</span><span>PLEASE STOP LANDING HERE</span><span>x8 COMBO</span>
       <span>SAVE THE SCIENTISTS</span><span>BOSS INCOMING <b>&#9656;</b> WAVE 10</span><span>AREA CLEARED!</span>
-      <span>WELCOME TO THE DARKSIDE</span><span>WAVE 70 AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
+      <span>WELCOME TO THE DARKSIDE</span><span>THE MOTHERSHIP AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
       <span>WAVE 1 <b>&#9656;</b> ALIENS INBOUND</span><span>PLEASE STOP LANDING HERE</span><span>x8 COMBO</span>
       <span>SAVE THE SCIENTISTS</span><span>BOSS INCOMING <b>&#9656;</b> WAVE 10</span><span>AREA CLEARED!</span>
-      <span>WELCOME TO THE DARKSIDE</span><span>WAVE 70 AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
+      <span>WELCOME TO THE DARKSIDE</span><span>THE MOTHERSHIP AWAITS</span><span>BATSH*T CRAZY UNLOCKED</span>
     </div>
   </div>
 
@@ -149,6 +149,7 @@
             <img src="assets/img/icons/omni_fire.webp" alt="" width="72" height="72">
             <span><h3>Omni-Fire</h3><p>A spinning spiral of bullets down every gate at once. The last-resort button.</p></span>
           </button>
+          <p class="power-desc" id="powerDesc" aria-live="polite"></p>
           <p class="scientist-note">Sometimes a rescued scientist brings a <strong>heart</strong> instead &mdash; full health, right when you need it.</p>
         </div>
       </div>
@@ -207,14 +208,13 @@
       <div class="reveal">
         <span class="eyebrow">Every tenth wave</span>
         <h2 class="h2 hot" id="boss-title">Something<br>much bigger.</h2>
-        <p class="lede">Seven bosses, each too wide to fit through a gate &mdash; so they don't. Beat one to clear the area, get beamed up, and unlock a checkpoint. Here's the first. The rest you'll have to meet in person.</p>
+        <p class="lede">Seven bosses, each too wide to fit through a gate &mdash; so they don't. Beat one to clear the area, get beamed up, and unlock a checkpoint.</p>
       </div>
       <div class="boss-stage reveal">
         <div class="boss-view">
           <figure class="screen">
             <div class="boss-bar" aria-hidden="true"><span></span></div>
             <img id="bossImg" src="assets/img/bosses/kraken.webp" alt="" width="1280" height="720" loading="lazy">
-            <div class="boss-locked" id="bossLocked" hidden aria-hidden="true"><span class="q">?</span><span class="stamp">CLASSIFIED</span></div>
             <figcaption class="boss-hud" aria-live="polite">
               <span class="wave" id="bossWave">WAVE 10</span>
               <h3 id="bossName">KRAKEN</h3>
@@ -277,7 +277,7 @@
           <li><button class="track" data-src="assets/audio/area-1.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Area 1<small>A Piece of Cake</small></span><span class="d">0:45</span></button></li>
           <li><button class="track" data-src="assets/audio/area-4.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Area 4<small>A Splitting Headache</small></span><span class="d">0:45</span></button></li>
           <li><button class="track" data-src="assets/audio/darkside.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">The Darkside<small>Bonus level</small></span><span class="d">0:45</span></button></li>
-          <li><button class="track" data-src="assets/audio/final-boss.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Final Boss<small>Wave 70</small></span><span class="d">0:45</span></button></li>
+          <li><button class="track" data-src="assets/audio/final-boss.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">The Mothership<small>Final boss</small></span><span class="d">0:45</span></button></li>
           <li><button class="track" data-src="assets/audio/batshit.mp3" aria-pressed="false"><span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span class="eq"><i></i><i></i><i></i></span></span><span class="t">Batsh*t Crazy<small>Endless mode</small></span><span class="d">0:45</span></button></li>
         </ul>
         <div class="progress" id="progress" aria-hidden="true"><span></span></div>
@@ -305,6 +305,9 @@
         <button class="shot reveal" data-full="assets/img/shots/slomo.webp"><img src="assets/img/thumbs/slomo.webp" alt="Slo-Mo: the arena turns dreamy and every alien crawls" width="800" height="450" loading="lazy"><figcaption>SLO-MO</figcaption></button>
         <button class="shot reveal" data-full="assets/img/shots/shock.webp"><img src="assets/img/thumbs/shock.webp" alt="Electric Wipeout on wave 35" width="800" height="450" loading="lazy"><figcaption>ELECTRIC WIPEOUT</figcaption></button>
         <button class="shot reveal" data-full="assets/img/shots/darkside-ribbon.webp"><img src="assets/img/thumbs/darkside-ribbon.webp" alt="The Darkside ribbon twisting through space" width="800" height="450" loading="lazy"><figcaption>THE DARKSIDE</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/bosses/hydra.webp"><img src="assets/img/bosses/hydra.webp" alt="The Hydra's heads lunging over the wall" width="1280" height="720" loading="lazy"><figcaption>WAVE 40 &middot; HYDRA</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/bosses/wyrm.webp"><img src="assets/img/bosses/wyrm.webp" alt="The Wyrm coiling into the arena" width="1280" height="720" loading="lazy"><figcaption>WAVE 60 &middot; THE WYRM</figcaption></button>
+        <button class="shot reveal" data-full="assets/img/bosses/mothership.webp"><img src="assets/img/bosses/mothership.webp" alt="The Mothership attacking the turret" width="1280" height="720" loading="lazy"><figcaption>WAVE 70 &middot; THE MOTHERSHIP</figcaption></button>
       </div>
     </div>
   </section>

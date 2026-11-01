@@ -297,6 +297,23 @@ main, footer { position: relative; z-index: 1; }
   font-size: 15px; color: #ddd6b8;
 }
 .scientist-note strong { color: var(--yellow); }
+.power-desc { display: none; }
+/* single column: no sticky image; the power-ups become a row of icon tabs under it,
+   with the selected one's description below, so a tap visibly swaps the image */
+@media (max-width: 960px) {
+  .power-view { position: static; }
+  .power-list { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .power { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 6px; padding: 10px 4px 12px; }
+  .power img { width: 52px; height: 52px; }
+  .power h3 { font-size: 16px; margin: 0; }
+  .power p { display: none; }
+  .power:hover, .power[aria-selected="true"] { transform: none; }
+  .power-desc {
+    display: block; grid-column: 1 / -1; min-height: 3em; margin: 4px 2px 0;
+    font-size: 16px; color: #d9d5f5; line-height: 1.5;
+  }
+  .scientist-note { grid-column: 1 / -1; }
+}
 
 /* ---------- aliens ---------- */
 .aliens-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; }
@@ -353,38 +370,6 @@ main, footer { position: relative; z-index: 1; }
   80% { clip-path: inset(0 0 0 0); transform: translateX(-2px); filter: none; }
   100% { clip-path: inset(0 0 0 0); transform: none; }
 }
-/* locked bosses: a classified panel in place of the screenshot (no spoilers) */
-.boss-locked {
-  position: absolute; left: 0; right: 0; top: 0; aspect-ratio: 16 / 9; z-index: 1;
-  display: grid; place-items: center; overflow: hidden;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,59,78,.22) 1.4px, transparent 1.8px) 0 0 / 10px 10px,
-    radial-gradient(ellipse at 50% 40%, #2a0612, #07020a 70%);
-}
-.boss-locked[hidden] { display: none; }
-.boss-locked::before {
-  content: ""; position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
-  animation: static .25s steps(3) infinite;
-}
-@keyframes static { 50% { transform: translateY(2px); opacity: .6; } }
-.boss-locked .q {
-  font-family: var(--display); font-size: clamp(140px, 24vw, 300px); line-height: 1; color: #120408;
-  -webkit-text-stroke: 3px var(--red); text-shadow: 0 0 40px rgba(255,59,78,.55); margin-top: -8%;
-  animation: hover 3s ease-in-out infinite;
-}
-.boss-locked .stamp {
-  position: absolute; top: 18%; right: 8%; transform: rotate(12deg);
-  font-family: var(--pixel); font-size: clamp(10px, 1.4vw, 16px); letter-spacing: .14em; color: var(--red);
-  border: 3px solid var(--red); padding: 10px 14px; border-radius: 6px; opacity: .85;
-}
-@media (max-width: 640px) {
-  .boss-locked .stamp { top: 10%; right: 5%; padding: 5px 8px; border-width: 2px; font-size: 9px; }
-  .boss-locked .q { margin-top: 0; }
-}
-.boss-locked.glitch { animation: glitch .45s steps(6) both; }
-.bosses.is-locked .boss-bar { display: none; }
-.boss-tab.locked .name { letter-spacing: .2em; }
 .boss-hud {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: clamp(16px, 3vw, 34px);
   background: linear-gradient(0deg, rgba(4,2,11,.95) 10%, rgba(4,2,11,.6) 60%, transparent);
