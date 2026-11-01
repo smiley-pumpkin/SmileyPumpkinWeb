@@ -220,6 +220,11 @@ main, footer { position: relative; z-index: 1; }
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.45));
 }
+/* The trailer: the same screen frame, no scanline overlay over real video. */
+.trailer .wrap { display: grid; gap: clamp(24px, 3vw, 40px); }
+.screen.video { margin: 0; }
+.screen.video::after { display: none; }
+.screen.video video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
 .tilt { transform: perspective(1400px) rotateY(-7deg) rotateX(3deg); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .tilt:hover { transform: perspective(1400px) rotateY(0) rotateX(0); }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 34px; }
